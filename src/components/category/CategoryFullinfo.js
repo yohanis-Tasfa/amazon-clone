@@ -1,9 +1,9 @@
 export const categoryfullinfo = [
   {
     id: 1,
-    name: "electronics",
+    name: "Get your game on",
     image:
-      "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2020/May/Dashboard/Fuji_Dash_TV_2X._SY304_CB432517900_.jpg",
+      "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Events/2024/Stores-Gaming/FinalGraphics/Fuji_Gaming_store_Dashboard_card_1x_EN._SY304_CB564799420_.jpg",
     description: "Electronic gadgets and accessories.",
   },
   {
