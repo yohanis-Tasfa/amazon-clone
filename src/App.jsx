@@ -1,14 +1,18 @@
 import { useState } from "react";
 import Header from "./components/header/Header";
-import Carousel from "./components/carousel/Carousel";
 import Category from "./components/category/Category";
+import CarouselEffect from "./components/carousel/CarouselEffect";
+import Product from "./components/product/Product";
+
+// import { Carousel } from "react-responsive-carousel";
 
 function App() {
   return (
     <>
       <Header />
-      <Carousel />
+      <CarouselEffect />
       <Category />
+      <Product />
     </>
   );
 }
