@@ -5,6 +5,7 @@ import axios from "axios";
 import { producturl } from "../../Api/endPoints";
 import ProductCard from "../../components/product/ProductCard";
 import Loader from "../../components/loader/Loader";
+import Classes from "./ProductDetail.module.css"; // Import the CSS module
 
 function ProductDetail() {
   const { productid } = useParams();
@@ -28,9 +29,27 @@ function ProductDetail() {
   return (
     <Layout>
       {isLoading ? (
-        <Loader />
+        <div className={Classes.loader}>
+          <Loader />
+        </div>
       ) : (
-        <ProductCard product={product} flex={true} renderDesc={true} />
+        <div className={Classes.productCard}>
+          <img
+            src={product.image}
+            alt={product.title}
+            className={Classes.productImage}
+          />
+          <div className={Classes.product_details}>
+            <h3>{product.title}</h3>
+            <div className={Classes.product_rating}>
+              <span>⭐ {product.rating?.rate || 0}</span>
+              <span>({product.rating?.count || 0} reviews)</span>
+            </div>
+            <div className={Classes.product_price}>${product.price}</div>
+            <p>{product.description}</p>
+            <button className={Classes.add_to_cart_btn}>Add to Cart</button>
+          </div>
+        </div>
       )}
     </Layout>
   );

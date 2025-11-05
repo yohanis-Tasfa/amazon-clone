@@ -12,10 +12,10 @@ import { DataContext } from "../dataprovider/DataProvider";
 
 function Header() {
   const [{ basket }, dispatch] = useContext(DataContext);
-  console.log(basket);
+  // console.log(basket);
 
   return (
-    <>
+    <section className={classes.fixed_header}>
       <section>
         <div className={classes.header__container}>
           {/* logo */}
@@ -40,7 +40,7 @@ function Header() {
               <option value="">All</option>
             </select>
             <input type="text" name="" id="" placeholder="search product" />
-            <BsSearch size={25} />
+            <BsSearch size={42} />
           </div>
 
           {/* three component */}
@@ -73,7 +73,7 @@ function Header() {
         </div>
       </section>
       <LowerHeader />
-    </>
+    </section>
   );
 }
 

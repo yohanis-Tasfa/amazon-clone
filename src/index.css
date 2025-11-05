@@ -2,6 +2,15 @@
   padding: 0;
   margin: 0;
   font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+
+/* make images responsive globally */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 :root {

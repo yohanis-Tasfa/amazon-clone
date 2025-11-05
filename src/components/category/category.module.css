@@ -63,6 +63,20 @@
 @media screen and (max-width: 900px) {
   .category_container {
     grid-template-columns: repeat(2, 1fr);
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .category {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .category img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
