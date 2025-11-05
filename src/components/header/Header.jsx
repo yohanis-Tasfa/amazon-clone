@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-
+import React, { useContext, useEffect } from "react";
 import classes from "./Header.module.css";
 import amazonLogo from "../../assets/images/amazonLogo.png";
 import americanLogo from "../../assets/images/americanimage.png";
@@ -11,67 +10,77 @@ import { Link } from "react-router-dom";
 import { DataContext } from "../dataprovider/DataProvider";
 
 function Header() {
-  const [{ basket }, dispatch] = useContext(DataContext);
-  // console.log(basket);
+  const [{ basket }] = useContext(DataContext);
+
+  // Adjust page content margin dynamically
+  useEffect(() => {
+    const adjustContentMargin = () => {
+      const header = document.querySelector(`.${classes.fixed_header}`);
+      const main = document.querySelector(".main_content");
+      if (header && main) {
+        main.style.marginTop = `${header.offsetHeight}px`;
+      }
+    };
+
+    adjustContentMargin();
+    window.addEventListener("resize", adjustContentMargin);
+
+    return () => window.removeEventListener("resize", adjustContentMargin);
+  }, []);
 
   return (
     <section className={classes.fixed_header}>
-      <section>
-        <div className={classes.header__container}>
-          {/* logo */}
-          <div className={classes.logo__container}>
-            <Link to="/">
-              <img src={amazonLogo} alt="amazon logo" />
-            </Link>
-            {/* delivery */}
-            <div className={classes.delivery}>
-              <span>
-                <SlLocationPin />
-              </span>
-              <div>
-                <p>Delivered to</p>
-                <span>Ethiopia</span>
-              </div>
+      <div className={classes.header__container}>
+        <div className={classes.logo__container}>
+          <Link to="/">
+            <img src={amazonLogo} alt="amazon logo" />
+          </Link>
+          <div className={classes.delivery}>
+            <span>
+              <SlLocationPin />
+            </span>
+            <div>
+              <p>Delivered to</p>
+              <span>Ethiopia</span>
             </div>
           </div>
-          {/* search */}
-          <div className={classes.search}>
-            <select name="" id="">
-              <option value="">All</option>
-            </select>
-            <input type="text" name="" id="" placeholder="search product" />
-            <BsSearch size={42} />
-          </div>
-
-          {/* three component */}
-          <div className={classes.order__container}>
-            <a href="" className={classes.language}>
-              <img src={americanLogo} alt="" />
-              <select name="" id="">
-                <option value="">EN</option>
-              </select>
-            </a>
-
-            <Link to=" ">
-              <div>
-                <p>Sign In</p>
-                <span>Account and Lists</span>
-              </div>
-            </Link>
-            {/* Orders  */}
-
-            <Link to="/orders">
-              <p>returns</p>
-              <span> & orders</span>
-            </Link>
-            {/* cart  */}
-            <Link to="/cart" className={classes.cart}>
-              <BiCart size={35} />
-              <span>{basket.length}</span>
-            </Link>
-          </div>
         </div>
-      </section>
+
+        <div className={classes.search}>
+          <select>
+            <option value="">All</option>
+          </select>
+          <input type="text" placeholder="Search product" />
+          <BsSearch size={42} />
+        </div>
+
+        <div className={classes.order__container}>
+          <a href="" className={classes.language}>
+            <img src={americanLogo} alt="" />
+            <select>
+              <option value="">EN</option>
+            </select>
+          </a>
+
+          <Link to=" ">
+            <div>
+              <p>Sign In</p>
+              <span>Account and Lists</span>
+            </div>
+          </Link>
+
+          <Link to="/orders">
+            <p>Returns</p>
+            <span>& Orders</span>
+          </Link>
+
+          <Link to="/cart" className={classes.cart}>
+            <BiCart size={35} />
+            <span>{basket.length}</span>
+          </Link>
+        </div>
+      </div>
+
       <LowerHeader />
     </section>
   );

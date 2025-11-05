@@ -7,9 +7,11 @@ import Product from "../../components/product/Product";
 function Landing() {
   return (
     <Layout>
-      <CarouselEffect />
-      <Category />
-      <Product />
+      <main className="main_content">
+        <CarouselEffect />
+        <Category />
+        <Product />
+      </main>
     </Layout>
   );
 }
