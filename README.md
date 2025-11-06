@@ -1,63 +1,42 @@
-# Amazon Clone — Frontend
+🏠 Amazon Clone — Frontend
+A lightweight and responsive Amazon-inspired frontend built using React and Vite.
+This project focuses on the frontend implementation, providing a smooth, user-friendly experience for browsing products, viewing details, and managing a shopping cart.
 
-Lightweight Amazon-like frontend built with React. Implements product listing, category results, product details, cart, and a global context for state (cart/basket).
+✨ Features
 
-## Features
+- 🏠 **Landing Page**: Interactive carousel, product categories, and featured products
+- 🔍 **Category Search**: Browse products by category
+- 🛒 **Product Details**: Detailed view with add-to-cart functionality
+- 🛍️ **Shopping Cart**: Add/remove products, view subtotal, and manage cart items
+- 🌐 **Global State Management**: React Context + useReducer (DataProvider) for cart and app state
+- 📱 **Responsive Design**: Works on desktop, tablet, and mobile devices
 
-- Landing page with carousel, categories and products
-- Category search / results page
-- Product detail page
-- Cart with add / remove and subtotal
-- Global state using React Context + useReducer (DataProvider)
-- Responsive layout for desktop, tablet and mobile
+🧰 Tech Stack
+Technology Purpose
+React.js UI framework
+Vite Build tool and development server
+CSS Modules Styling and layout
+React Router v6 Navigation and routing
+Axios HTTP requests
 
-## Tech stack
+🛠️ Installation & Setup
 
-- React (function components, hooks)
-- React Router v6
-- CSS Modules
-- Axios (HTTP requests)
-- Vite / Create React App (project bootstrapped locally)
+# 1️⃣ Clone this repository
 
-## Quick start (Windows)
+git clone https://github.com/yohanis-tasfa/amazon-clone-frontend.git
 
-1. Install dependencies
-   - npm: `npm install`
-2. Start dev server
-   - `npm run dev` (or `npm start` if your project uses CRA)
-3. Open: http://localhost:3000 or the port printed by the dev server
+# 2️⃣ Navigate into the project folder
 
-## Environment
+cd amazon-clone-frontend
 
-Create a .env file (if needed) for API base URLs and keys. Example:
+# 3️⃣ Install dependencies
 
-```
-VITE_API_BASE_URL=https://your-api.example.com
-```
+npm install
 
-In code the endpoints are imported from `src/Api/endPoints.js` — update that file to point to your backend.
+# 4️⃣ Run the development server
 
-## Important files
+npm run dev
 
-- src/main.jsx — app bootstrap and DataProvider mount
-- src/components/dataprovider/DataProvider.jsx — global state provider (useReducer)
-- src/utility/reducer.js — reducer and initialState (cart actions)
-- src/components/header/Header.jsx + Header.module.css — top + lower header
-- src/components/product/ProductCard.jsx & product.module.css — product UI, add-to-cart
-- src/pages/cart/Cart.jsx & cart.module.css — cart page
+# 5️⃣ Open your browser
 
-## Notes / Known issues
-
-- Header stickiness: header bars are fixed; if you see overlap, ensure `.main_content` has top margin/padding equal to combined header heights (change in CSS or Layout.jsx).
-- Route paths must match links (e.g., `/product/:productid` vs `/products/:productid`). Update `src/Routing.jsx` if navigation logs "No routes matched".
-- DataProvider must be imported/exported correctly (named vs default). Confirm `DataProvider` export matches its import in `src/main.jsx`.
-- If an image or element causes horizontal scroll on small screens, ensure `img { max-width:100%; height:auto }` and responsive CSS for product cards.
-
-## Contributing
-
-- Open an issue for bugs or feature requests.
-- Create PRs for fixes; keep changes scoped and include screenshots for UI updates.
-
-## License
-
-MIT — use and modify as needed.
+Go to the URL printed in the console (usually http://localhost:5173) to view the app
