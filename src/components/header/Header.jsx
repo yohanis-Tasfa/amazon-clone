@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import classes from "./Header.module.css";
 import amazonLogo from "../../assets/images/amazonLogo.png";
 import americanLogo from "../../assets/images/americanimage.png";
@@ -12,24 +12,8 @@ import { DataContext } from "../dataprovider/DataProvider";
 function Header() {
   const [{ basket }] = useContext(DataContext);
 
-  // Adjust page content margin dynamically
-  useEffect(() => {
-    const adjustContentMargin = () => {
-      const header = document.querySelector(`.${classes.fixed_header}`);
-      const main = document.querySelector(".main_content");
-      if (header && main) {
-        main.style.marginTop = `${header.offsetHeight}px`;
-      }
-    };
-
-    adjustContentMargin();
-    window.addEventListener("resize", adjustContentMargin);
-
-    return () => window.removeEventListener("resize", adjustContentMargin);
-  }, []);
-
   return (
-    <section className={classes.fixed_header}>
+    <section className={classes.fixed}>
       <div className={classes.header__container}>
         <div className={classes.logo__container}>
           <Link to="/">
@@ -55,14 +39,14 @@ function Header() {
         </div>
 
         <div className={classes.order__container}>
-          <a href="" className={classes.language}>
+          <a href="#" className={classes.language}>
             <img src={americanLogo} alt="" />
             <select>
               <option value="">EN</option>
             </select>
           </a>
 
-          <Link to=" ">
+          <Link to="#">
             <div>
               <p>Sign In</p>
               <span>Account and Lists</span>
