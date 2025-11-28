@@ -25,7 +25,9 @@ app.post("/payments/create", async (req, res) => {
     currency: "usd",
   });
   console.log(paymentIntent);
-  res.status(201).json(paymentIntent);
+  res.status(201).json({
+   clientSecret: paymentIntent.client_secret
+  });
 } else {
   res.status(400).json({message: "Invalid amount"});
 }
