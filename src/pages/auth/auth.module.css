@@ -72,3 +72,7 @@ margin-top: 10px;
 .create_account_button:hover{
     background-color: #d6d8da;
 }
+.error{
+    color: red;
+    margin-top: 10px;
+}

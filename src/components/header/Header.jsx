@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { DataContext } from "../dataprovider/DataProvider";
 
 function Header() {
-  const [{ basket }] = useContext(DataContext);
+  const [{ user, basket }] = useContext(DataContext);
 
   return (
     <section className={classes.fixed}>
@@ -48,9 +48,13 @@ function Header() {
 
           <Link to="/auth">
             <div>
-              <p>Sign In</p>
-              <span>Account and Lists</span>
+              {user ? (
+                <p>Hello, {user?.email?.split("@")[0]}</p>
+              ) : (
+                <p>Hello, Sign in</p>
+              )}
             </div>
+            <span>Account and Lists</span>
           </Link>
 
           <Link to="/orders">
