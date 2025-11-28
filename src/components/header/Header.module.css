@@ -91,6 +91,18 @@
   background-color: #d49644;
 }
 
+/* Account box for sign out*/
+.accountBox {
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  transition: border 0.2s ease;
+}
+
+.accountBox:hover {
+  border: 1px solid white;
+}
+
+
 /* Orders, language, and cart */
 .order__container {
   display: flex;
