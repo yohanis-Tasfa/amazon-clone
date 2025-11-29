@@ -1,0 +1,135 @@
+/* =========================================================
+   HEADER
+   ========================================================= */
+.Payment_header {
+  padding: 20px;
+  font-size: 24px;
+  text-align: center;
+  background-color: rgb(234, 237, 237);
+  font-weight: 600;
+}
+
+/* =========================================================
+   SECTION WRAPPER
+   ========================================================= */
+.Payment_section {
+  padding: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* =========================================================
+   EACH SECTION (Address, Review Items, Payment Method)
+   ========================================================= */
+.Payment_address {
+  display: flex;
+  gap: 20px;
+  padding: 30px 0;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+/* Left title */
+.Payment_address h3 {
+  min-width: 250px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Right content area */
+.Payment_address > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: auto !important;
+  width: 100%;
+}
+
+/* Product card image inside review section */
+.Payment_address img {
+  width: 80px !important;
+}
+
+/* =========================================================
+   PAYMENT CARD (Right Side) STYLING
+   ========================================================= */
+.payment_card_container {
+  max-width: 350px;
+  width: 100%;
+}
+
+.payment_price {
+  padding: 20px;
+}
+
+.payment_price > div {
+  display: flex;
+  font-size: 16px;
+  gap: 10px;
+}
+
+.payment_details button {
+  margin-top: 15px;
+  width: 100%;
+  border: none;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.payment_details button:hover {
+  background-color: var(--primary-shade);
+}
+
+/* =========================================================
+   RESPONSIVE BEHAVIOR
+   ========================================================= */
+
+/* Tablets — reduce padding and spacing */
+@media screen and (max-width: 900px) {
+  .Payment_section {
+    padding: 20px;
+  }
+
+  .Payment_address {
+    gap: 15px;
+    padding: 20px 0;
+  }
+
+  .Payment_address h3 {
+    min-width: 220px;
+    font-size: 18px;
+  }
+}
+
+/* Mobile — full stacking */
+@media screen and (max-width: 600px) {
+  .Payment_address {
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 0;
+  }
+
+  .Payment_address h3 {
+    min-width: 100%;
+    font-size: 18px;
+  }
+
+  .Payment_header {
+    font-size: 20px;
+    padding: 15px;
+  }
+}
+
+/* Extra small screens */
+@media screen and (max-width: 420px) {
+  .Payment_section {
+    padding: 15px;
+  }
+
+  .Payment_address h3 {
+    font-size: 17px;
+  }
+}

@@ -13,6 +13,10 @@ import { auth } from "../../utility/firebase";
 function Header() {
   const [{ user, basket }] = useContext(DataContext);
 
+  const total = basket?.reduce((amount, item) => {
+    return item.amount + amount;
+  }, 0);
+
   return (
     <section className={classes.fixed}>
       <div className={classes.header__container}>
@@ -72,7 +76,7 @@ function Header() {
 
           <Link to="/cart" className={classes.cart}>
             <BiCart size={35} />
-            <span>{basket.length}</span>
+            <span>{total}</span>
           </Link>
         </div>
       </div>
