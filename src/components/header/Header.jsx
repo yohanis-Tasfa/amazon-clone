@@ -57,7 +57,7 @@ function Header() {
               onClick={() => auth.signOut()}
               style={{ cursor: "pointer" }}
             >
-              <p>Hello, {user.email.split("@")[0]}</p>
+              <p>Hello, {user?.email?.split("@")[0]}</p>
               <span>Sign Out</span>
             </div>
           ) : (

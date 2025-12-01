@@ -14,11 +14,11 @@ app.use(cors({origin: true}));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(200).send("Hello World");
+  res.status(200).json({message: "hello backend"});
 });
 
 app.post("/payments/create", async (req, res) => {
-  const total = req.query.total;
+  const total = parseInt(req.query.total);
   if (total >0) {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: total,

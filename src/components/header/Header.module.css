@@ -7,10 +7,14 @@
 
 /* Entire Header (both top and lower) sticks to top */
 .fixed {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
-
+}
+body {
+  padding-top: 110px; /* adjust if you change header height */
 }
 
 /* Top header container */
@@ -188,6 +192,9 @@
 }
 
 @media screen and (max-width: 576px) {
+  body {
+    padding-top: 130px;
+  }
   .header__container {
     flex-direction: column;
     align-items: stretch;

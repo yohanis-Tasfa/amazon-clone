@@ -83,6 +83,14 @@
   background-color: var(--primary-shade);
 }
 
+.spinner{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  color: white;
+}
+
 /* =========================================================
    RESPONSIVE BEHAVIOR
    ========================================================= */
