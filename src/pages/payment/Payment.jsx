@@ -72,7 +72,7 @@ function Payment() {
       );
 
       setProcessing(false);
-      navigate("/orders", { state: { msg: "order success" } });
+      navigate("/orders", { state: { msg: "order success" } }); // redirect to orders page
     } catch (error) {
       setProcessing(false);
     }

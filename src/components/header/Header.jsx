@@ -9,6 +9,7 @@ import LowerHeader from "./LowerHeader";
 import { Link } from "react-router-dom";
 import { DataContext } from "../dataprovider/DataProvider";
 import { auth } from "../../utility/firebase";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [{ user, basket }] = useContext(DataContext);
@@ -16,6 +17,8 @@ function Header() {
   const total = basket?.reduce((amount, item) => {
     return item.amount + amount;
   }, 0);
+
+  const navigate = useNavigate();
 
   return (
     <section className={classes.fixed}>
@@ -53,8 +56,17 @@ function Header() {
 
           {user ? (
             <div
-              className={`${classes.accountBox}`}
-              onClick={() => auth.signOut()}
+              className={classes.accountBox}
+              onClick={() => {
+                auth
+                  .signOut() // ← Sign out from Firebase
+                  .then(() => {
+                    navigate("/auth"); // ← Redirect to login page
+                  })
+                  .catch((error) => {
+                    console.error("Sign out error:", error);
+                  });
+              }}
               style={{ cursor: "pointer" }}
             >
               <p>Hello, {user?.email?.split("@")[0]}</p>

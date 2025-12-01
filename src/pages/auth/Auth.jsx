@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import amazonLogo from "../../assets/images/amazonLogo_auth.png";
 import classes from "./auth.module.css";
 import { auth } from "../../utility/firebase";
@@ -21,6 +21,7 @@ function Auth() {
 
   const [{ user }, dispatch] = useContext(DataContext);
   const navigate = useNavigate();
+  const navstatedate = useLocation();
 
   const authHandler = async (e) => {
     e.preventDefault();
@@ -31,7 +32,7 @@ function Auth() {
         .then((userInfo) => {
           dispatch({ type: "SET_USER", user: userInfo.user });
           setLoading({ ...loading, signIn: false });
-          navigate("/"); // go to home page
+          navigate(navstatedate?.state?.redirect || "/"); // go to home page
         })
         .catch((error) => {
           setError(error.message);
@@ -44,7 +45,7 @@ function Auth() {
         .then((userInfo) => {
           dispatch({ type: "SET_USER", user: userInfo.user });
           setLoading({ ...loading, signUp: false });
-          navigate("/"); //go to home page
+          navigate(navstatedate?.state?.redirect || "/"); //go to home page
         })
         .catch((error) => {
           setError(error.message);
@@ -65,6 +66,20 @@ function Auth() {
 
       <div className={classes.login__container}>
         <h1>Sign-In</h1>
+        {navstatedate?.state?.msg && (
+          <small
+            style={{
+              padding: "7px",
+              textAlign: "center",
+              color: "red",
+              fontWeight: "bold",
+            }}
+          >
+            {" "}
+            {navstatedate?.state?.msg}
+          </small>
+        )}
+
         <form action="">
           <div>
             <label htmlFor="email">Email</label>
