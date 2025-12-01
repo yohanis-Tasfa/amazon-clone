@@ -9,6 +9,7 @@ import Result from "./pages/result/Result";
 import ProductDetail from "./pages/productDetail/ProductDetail";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import ScrollToTop from "./components/scroll/ScrollToTop";
 
 const stripePromise = loadStripe(
   "pk_test_51SYSaGKEkr13WB8ikXoeUuXEcUvJw9srayFPAuIJov2basivlXCuc7Buxkc2kNfq1R3t5HAIbjcgE7g9vyBeiM0c00UnHzGmqO"
@@ -17,6 +18,8 @@ const stripePromise = loadStripe(
 function Routing() {
   return (
     <Router>
+      <ScrollToTop />
+
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/auth" element={<Auth />} />

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Header from "../header/Header";
 import classes from "../header/Header.module.css"; // Import to use the same class
+import Footer from "../footer/Footer";
 
 function Layout({ children }) {
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -42,6 +43,7 @@ function Layout({ children }) {
       <main style={{ paddingTop: `${headerHeight}px`, minHeight: "100vh" }}>
         {children}
       </main>
+      <Footer />
     </>
   );
 }
