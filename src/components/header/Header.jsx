@@ -59,17 +59,13 @@ function Header() {
               className={classes.accountBox}
               onClick={() => {
                 auth
-                  .signOut() // ← Sign out from Firebase
-                  .then(() => {
-                    navigate("/auth"); // ← Redirect to login page
-                  })
-                  .catch((error) => {
-                    console.error("Sign out error:", error);
-                  });
+                  .signOut()
+                  .then(() => navigate("/auth"))
+                  .catch((error) => console.error("Sign out error:", error));
               }}
               style={{ cursor: "pointer" }}
             >
-              <p>Hello, {user?.email?.split("@")[0]}</p>
+              <p>Hello, {user?.email ? user.email.split("@")[0] : "Guest"}</p>
               <span>Sign Out</span>
             </div>
           ) : (

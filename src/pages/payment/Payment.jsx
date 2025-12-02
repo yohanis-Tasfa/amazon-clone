@@ -7,132 +7,144 @@ import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import CurrencyFormat from "../../components/currencyformat/CurrencyFormat";
 import { axiosInstance } from "../../Api/axios";
 import { ClipLoader } from "react-spinners";
-import { doc, setDoc, collection } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../utility/firebase";
 import { useNavigate } from "react-router-dom";
 
 function Payment() {
   const [processing, setProcessing] = useState(false);
+  const [cardError, setCardError] = useState("");
 
-  const [{ user, basket }] = useContext(DataContext);
-  const total = basket?.reduce((amount, item) => {
-    return item.amount + amount;
-  }, 0);
-
-  const totalitem = basket?.reduce((amount, item) => {
-    return item.price * item.amount + amount;
-  }, 0);
-
-  const [cardError, setCardError] = useState(null);
+  const [{ user, basket }, dispatch] = useContext(DataContext);
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
 
-  // card element change handler
+  const totalItems = basket?.reduce((sum, item) => sum + item.amount, 0);
+  const totalPrice = basket?.reduce(
+    (sum, item) => sum + item.price * item.amount,
+    0
+  );
 
+  // Card element change handler
   const handleChange = (e) => {
-    console.log(e);
-    e?.error?.message ? setCardError(e.error.message) : setCardError("");
+    setCardError(e.error ? e.error.message : "");
   };
 
-  // payment handler
-  const handlePayement = async (e) => {
+  // Payment handler
+  const handlePayment = async (e) => {
     e.preventDefault();
+    if (!stripe || !elements) return;
 
     try {
       setProcessing(true);
-      // 1. create payment intent  => backend => cloud function contact to secret intent
-      const response = await axiosInstance({
-        method: "post",
-        url: `/payments/create?total=${totalitem}`,
-      });
 
-      const clientSecret = response.data?.clientSecret;
+      // 1. Request payment intent from backend
+      const response = await axiosInstance.post(
+        `/payments/create?total=${Math.round(totalPrice * 100)}`
+      );
+      const clientSecret = response.data.clientSecret;
 
-      // 2. cleint side confirm card payment
-
-      const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      });
-
-      // 3. after confirmation order database save ,clear basket
-
-      await setDoc(
-        doc(
-          collection(doc(collection(db, "users"), user.uid), "orders"),
-          paymentIntent.id
-        ),
+      // 2. Confirm card payment
+      const { paymentIntent, error } = await stripe.confirmCardPayment(
+        clientSecret,
         {
-          basket,
-          amount: paymentIntent.amount,
-          created: paymentIntent.created,
+          payment_method: {
+            card: elements.getElement(CardElement),
+          },
         }
       );
 
+      if (error) {
+        setCardError(error.message);
+        setProcessing(false);
+        return;
+      }
+
+      // 3. Save order to Firestore
+      const orderRef = doc(db, "users", user.uid, "orders", paymentIntent.id);
+      await setDoc(orderRef, {
+        basket,
+        amount: paymentIntent.amount,
+        created: paymentIntent.created,
+      });
+
+      // 4. Empty basket
+      dispatch({ type: "EMPTY_BASKET" });
+
+      // 5. Redirect
       setProcessing(false);
-      navigate("/orders", { state: { msg: "order success" } }); // redirect to orders page
-    } catch (error) {
+      navigate("/orders", { state: { msg: "Order successful" } });
+    } catch (err) {
+      console.error("Payment error:", err);
       setProcessing(false);
+      setCardError("Payment failed. Please try again.");
     }
   };
 
   return (
     <Layout>
-      {/* header  */}
-      <div className={classes.Payment_header}>Cheakout ({total}) items</div>
+      {/* Header */}
+      <div className={classes.Payment_header}>
+        Checkout ({totalItems}) items
+      </div>
 
-      {/* payment method  */}
       <section className={classes.Payment_section}>
-        {/* address  */}
+        {/* Delivery Address */}
         <div className={classes.Payment_address}>
           <h3>Delivery Address</h3>
           <div className={classes.payment_card_container}>
             <div>{user?.email}</div>
             <div>123 React Lane</div>
-            <div>ETHIOPIA</div>
+            <div>Ethiopia</div>
           </div>
         </div>
+
         <hr />
 
-        {/* product item  */}
+        {/* Review Items */}
         <div className={classes.Payment_address}>
           <h3>Review items and delivery</h3>
           <div>
             {basket.map((item) => (
-              <ProductCard product={item} flex={true} key={item.title} />
+              <ProductCard
+                product={item}
+                flex={true}
+                key={item.title + item.id}
+              />
             ))}
           </div>
         </div>
 
         <hr />
 
-        {/* card from */}
+        {/* Payment Section */}
         <div className={classes.Payment_address}>
           <h3>Payment Method</h3>
           <div className={classes.payment_card_container}>
             <div className={classes.payment_details}>
-              <form onSubmit={handlePayement}>
-                {/* error  */}
+              <form onSubmit={handlePayment}>
+                {/* Stripe errors */}
                 {cardError && (
                   <small style={{ color: "red" }}>{cardError}</small>
                 )}
-                {/* CardElement  */}
+
+                {/* Card Element */}
                 <CardElement onChange={handleChange} />
 
-                {/* price  */}
+                {/* Price */}
                 <div className={classes.payment_price}>
                   <div>
-                    <span style={{ display: "flex", gap: "10px " }}>
-                      Total Order | <CurrencyFormat amount={totalitem} />
+                    <span style={{ display: "flex", gap: "10px" }}>
+                      Total Order | <CurrencyFormat amount={totalPrice} />
                     </span>
                   </div>
-                  <button type="submit">
+
+                  <button type="submit" disabled={processing}>
                     {processing ? (
                       <div className={classes.spinner}>
-                        <ClipLoader color="white" size={15} />
-                        <p>please wait...</p>
+                        <ClipLoader size={15} />
+                        <p>Please wait...</p>
                       </div>
                     ) : (
                       "Pay Now"
