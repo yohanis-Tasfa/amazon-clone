@@ -148,7 +148,7 @@ const Footer = () => {
             <a href="#">Your Ads Privacy Choices</a>
           </div>
           <p>
-            &copy; {new Date().getFullYear()} Yohanis tasfay. All rights
+            &copy; {new Date().getFullYear()} Yohanis tasfa. All rights
             reserved.
           </p>
         </div>
