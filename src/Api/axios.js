@@ -1,9 +1,11 @@
-// src/Api/axios.js  ← REPLACE YOUR ENTIRE FILE WITH THIS
+
 import axios from "axios";
 
+// Shared Axios client pointing at the deployed Render backend (not local
+// Firebase emulator). The trailing slash is omitted to avoid double slashes
+// when joining paths.
 const axiosInstance = axios.create({
-  // THIS IS THE ONLY CORRECT URL THAT WORKS WITH YOUR EMULATOR RIGHT NOW
-  baseURL: "http://127.0.0.1:5001/clone-72e28/us-central1/api",
+  baseURL: "https://amazon-clone-backend-4gyc.onrender.com",
 });
 
 export { axiosInstance };
